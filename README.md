@@ -1,62 +1,72 @@
+# Music Downloader
 
-# Music Downloader — Quick Manual
+CLI tool to download Spotify or YouTube playlists as MP3 files.
 
-A small CLI that downloads Spotify or YouTube playlists as MP3 files.
+## Features
+- Download songs from a Spotify playlist URL
+- Download songs from a YouTube playlist URL
+- Download from a text playlist file (`Artist - Title` per line)
+- Download a single song from artist + title input
+- Parallel downloads with configurable quality/output folder
 
-Quick prerequisites
-- Python 3.9+ (or system Python)
-- ffmpeg on PATH (macOS: `brew install ffmpeg`)
+## Requirements
+- Python 3.9+
+- `ffmpeg` on your PATH
 
-Quick start (recommended, safe)
-1. Create a virtual environment (optional but recommended):
+Install `ffmpeg` on macOS:
 
 ```bash
-cd /path/to/project
-/opt/homebrew/bin/python3 -m venv .venv
+brew install ffmpeg
+```
+
+## Setup
+From the repository root:
+
+```bash
+python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
-python -m pip install -r music-downloader/requirements.txt
+python -m pip install -r requirements.txt
 ```
 
-2. Add Spotify credentials (only if using `--spotify`): edit `.env` in the project root:
+If you plan to use Spotify, create a `.env` file in this directory with:
 
-```
+```env
 SPOTIPY_CLIENT_ID=your_client_id
 SPOTIPY_CLIENT_SECRET=your_client_secret
 ```
 
-3. Run the CLI
-
-# Music Downloader — Minimal Commands
-
-Quick: run these from the project root. Ensure `ffmpeg` is installed and dependencies are present.
-
-1) Spotify playlist (requires `.env` with `SPOTIPY_CLIENT_ID` and `SPOTIPY_CLIENT_SECRET`):
+## Usage
+Spotify playlist:
 
 ```bash
-python3 music-downloader/main.py --spotify "SPOTIFY_PLAYLIST_URL"
+python3 main.py --spotify "SPOTIFY_PLAYLIST_URL"
 ```
 
-2) YouTube playlist:
+YouTube playlist:
 
 ```bash
-python3 music-downloader/main.py --youtube "YOUTUBE_PLAYLIST_URL"
+python3 main.py --youtube "YOUTUBE_PLAYLIST_URL"
 ```
 
-3) From a plain text playlist file (`Artist - Title` per line):
+Playlist text file (`Artist - Title` per line):
 
 ```bash
-python3 music-downloader/downloader.py --playlist-file my_playlist.txt --output ./downloads
+python3 downloader.py --playlist-file my_playlist.txt --output ./downloads
 ```
 
-4) Single song (artist + title):
+Single song:
 
 ```bash
-python3 music-downloader/downloader.py "Artist Name" "Song Title"
+python3 downloader.py "Artist Name" "Song Title"
 ```
 
-Notes:
-- You can omit `--output`, `--quality`, and `--workers` to use defaults.
-- Add `--subfolder-by-playlist` to group downloads under a playlist-named folder.
-```bash
+## Useful Flags
+- `--output ./downloads` set output directory
+- `--quality 192` set MP3 bitrate (example)
+- `--workers 4` control parallel downloads
+- `--subfolder-by-playlist` group output by playlist name
 
+## Notes
+- Omit optional flags to use defaults.
+- Keep your Spotify credentials private and never commit `.env`.
